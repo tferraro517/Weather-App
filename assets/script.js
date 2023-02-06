@@ -1,37 +1,52 @@
 // get api weather url
 // fetch element
 // json
-var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=london&appid=2359370e6cfd687532eeeef2aa190236";
+var searchBtn = document.getElementById("searchBtn");
 
-function GetInfo(){
+searchBtn.addEventListener("click",function(){
+
+  var userCurrentSearch = document.getElementById("cityInput").value;
+  console.log(userCurrentSearch);
+  GetInfo(userCurrentSearch);
+})
+function GetInfo(currentCity){
+  var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q="+currentCity+"&appid=2359370e6cfd687532eeeef2aa190236&units=imperial";
   const newName= document.getElementById("cityInput");
   const cityName = document.getElementById("cityName");
-  cityName.innerHTML ="--"+newName.value+"--"
+
 
 fetch(apiUrl)
 .then(response => response.json())
-.then(data => {
+.then((data)=> {
   console.log(data);
   for(i=0;i<5;i++){
-    document.getElementById("day" +(i+1)+"Min").innerHTML = "Min:" +Number(data.list[1].main.temp_main -275.69).toFixed(1)+"°";
-  }
-    for(i=0;i<5;i++){
-      document.getElementById("day" +(i+1)+"Max").innerHTML = "Max:" +Number(data.list[1].main.temp_main -275.89).toFixed(1)+"°";
-  }
+    
+    document.getElementById(`day${i+1}Temp`).innerHTML = "Temp:" +(data.list[1].main.temp)+"°";
+
+   }
+    for(a=0;a<5;a++){
+      console.log(document.getElementById("day" +(a+1)+"Humidity"))
+  
+      document.getElementById(`day${a+1}Humidity`).innerHTML = "Humidity:" +(data.list[1].main.humidity)+"%";
+    }
+
+  for(i=0;i<5;i++){
+    document.getElementById("day" +(i+1)+"WindSpeed").innerHTML = "WindSpeed:" + (data.list[1].main.temp_max)+"%";
+}
+
   for(i=0;i<5;i++){
     document.getElementById("img" +(i+1)).src =" http://openweathermap.org/img/wn/"+ data.list [i].weather[0].icon+".png";
   }
 
 })
 
-.catch(() => alert ("something went wrong"))
-}
+ }
 
 
 
 function DefaultScreen(){
   document.getElementById("cityInput").defaultValue ="London";
-  GetInfo();
+  // GetInfo();
 }
 const d =new Date();
 const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
