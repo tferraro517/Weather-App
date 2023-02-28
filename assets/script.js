@@ -129,3 +129,17 @@ console.log(localStorage.getItem(key));
 
 
 var cityList = document.getElementById("cityList");
+
+  var fiveDayForecast = function (data) {
+    $('.fiveDayForecast').empty();
+    for (let i = 1; i < 6; i++) {
+        var day = $("<div class='day'><div />")
+        $(day).append(toDateTime(data.daily[i].dt));
+        $(day).append(`<img src="https://openweathermap.org/img/w/${data.daily[i].weather[0].icon}.png"/>`);
+        $(day).append("<p>Temp: " + data.daily[i].temp.day + " °C</p>");
+        $(day).append("<p>Wind: " + data.daily[i].wind_speed + " MPH</p>");
+        $(day).append("<p>Humidity: " + data.daily[i].humidity + " %</p>");
+        $('.fiveDayForecast').append(day)
+
+    };
+}
