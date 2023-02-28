@@ -1,6 +1,3 @@
-// get api weather url
-// fetch element
-// json
 var searchBtn = document.getElementById("searchBtn");
 
 searchBtn.addEventListener("click", function () {
@@ -47,7 +44,7 @@ function GetInfo(currentCity) {
 
 function DefaultScreen() {
   document.getElementById("cityInput").defaultValue = "London";
-  // GetInfo();
+
 }
 const d = new Date();
 const weekday = [
@@ -70,22 +67,19 @@ function CheckDay(day) {
 for (i = 0; i < 5; i++) {
   document.getElementById("day" + (i + 1)).innerHTML = weekday[CheckDay(i)];
 }
-// dynamically put in local storage items
-// saved or list variable
-// saved list start empty
-//use local storage set item to push new local storage item into array
-// if statement
-//display array in container on html
+
 
 const cityName = document.getElementById("cityName");
 const listItems = document.getElementById("listItems");
-const savedList = [cityName, listItems];
+const savedList = [];
+
 
 function storeCity() {
-  localStorage.setItem("cityName", JSON.stringify(savedList));
+  localStorage.setItem("cityName", JSON.stringify(savedList))
+  cityName = localStorage.getItem("cityName");
 }
 function renderCity() {
-  // Clear todoList element and update todoCountSpan
+
   listItems.innerHTML = "";
   listItemsCountSpan.textContent = listItems.length;
 
@@ -104,10 +98,10 @@ function renderCity() {
 
 function display() {
   console.log("hello");
-  var setCity = localStorage.getItem("cityName", JSON.parse(savedList));
-  // renderMessage();
-  document.getElementById("cityName").innerHTML = setCity;
-}
+  var cityInput = document.getElementById("cityInput").value.trim();
+  savedList.push(cityInput)
+  localStorage.setItem("cityList", JSON.stringify(savedList))
+
 
 document
   .getElementById("searchBtn")
@@ -116,22 +110,22 @@ document
 
     var cityInput = document.getElementById("cityInput").value.trim();
 
-    // Return from function early if submitted todoText is blank
     if (cityInput === "") {
       return;
     }
 
-    // Add new todoText to todos array, clear the input
     savedList.push(cityInput);
     document.getElementById("cityInput").value = "";
 
-    // Store updated todos in localStorage, re-render the list
     storeCity();
     renderlistItems();
   });
 
-document.getElementById("searchBtn").addEventListener("click", display());
-// }
-// console.log("hello");
+document.getElementById("searchBtn").addEventListener("click", display);
 
-// var cityName = JSON.parse(localStorage())
+Object.keys(localStorage).forEach((key) => {
+console.log(localStorage.getItem(key));
+});
+
+
+var cityList = document.getElementById("cityList");
